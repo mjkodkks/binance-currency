@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  binancecurrency:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 7000:7000
+    environment:
+      - APP_ENV=production
+      - FETCH_EVERY_IN_SECOND=10
+      - PORT=7000
+      

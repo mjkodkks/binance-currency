@@ -31,10 +31,15 @@ type BinanceCurrencyResponse struct {
 var cache *BinanceCurrencyResponse = new(BinanceCurrencyResponse)
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+
+	appEnv := os.Getenv("APP_ENV")
+	if appEnv != "production" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
 	}
+
 	c := colly.NewCollector()
 	exitChan := make(chan bool)
 	// fetchBinanceCurrency(c)
