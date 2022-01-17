@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   binancecurrency:
+    restart: always
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -11,4 +12,3 @@ services:
       - APP_ENV=production
       - FETCH_EVERY_IN_SECOND=10
       - PORT=7000
-      

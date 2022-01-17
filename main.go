@@ -40,10 +40,9 @@ func main() {
 		}
 	}
 
-	c := colly.NewCollector()
 	exitChan := make(chan bool)
 	// fetchBinanceCurrency(c)
-	go routine(c, exitChan)
+	go routine(exitChan)
 
 	app := fiber.New()
 	app.Use(cors.New())
@@ -65,18 +64,19 @@ func main() {
 
 }
 
-func routine(c *colly.Collector, exitChan chan bool) {
+func routine(exitChan chan bool) {
 	for {
 		select {
 		case <-exitChan:
 			return
 		case <-time.After(getTimeRemaining()):
-			go fetchBinanceCurrency(c)
+			go fetchBinanceCurrency()
 		}
 	}
 }
 
-func fetchBinanceCurrency(c *colly.Collector) {
+func fetchBinanceCurrency() {
+	c := colly.NewCollector()
 	c.OnResponse(func(r *colly.Response) {
 		bCurrency := BinanceCurrencyResponse{}
 		bodyBytes := r.Body
