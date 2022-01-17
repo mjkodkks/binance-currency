@@ -47,7 +47,16 @@ func main() {
 		return c.Status(fiber.StatusOK).JSON(cache)
 	})
 
-	app.Listen(":7000")
+	port := 7000
+
+	portStr := os.Getenv("PORT")
+	portInt, err := strconv.Atoi(portStr)
+	if err != nil {
+		fmt.Println("Could not convert port to int")
+	}
+	port = portInt
+
+	app.Listen(fmt.Sprintf(":%d", port))
 
 }
 
